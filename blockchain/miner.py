@@ -7,8 +7,8 @@ from uuid import uuid4
 
 from timeit import default_timer as timer
 
-import random
-
+from random import randint
+import json
 
 def proof_of_work(last_proof):
     """
@@ -20,12 +20,21 @@ def proof_of_work(last_proof):
     - Use the same method to generate SHA-256 hashes as the examples in class
     """
 
+
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+   
     #  TODO: Your code here
 
+    prev_guess = f'{last_proof}'.encode()
+    last_hash = hashlib.sha256(prev_guess).hexdigest() 
+
+    proof = randint(1,1000000) + randint(1,100)
+
+    while valid_proof(last_hash, proof) is False:
+        proof+=randint(1,100)
+        #print("proof not yet found", proof)
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -37,10 +46,13 @@ def valid_proof(last_hash, proof):
     of the new proof?
 
     IE:  last_hash: ...AE912345, new hash 12345E88...
+    https://lambda-coin-test-1.herokuapp.com/api
     """
 
     # TODO: Your code here!
-    pass
+    new_guess = f'{proof}'.encode()
+    guess_hash = hashlib.sha256(new_guess).hexdigest()
+    return new_guess[:5] == last_hash[-5:]
 
 
 if __name__ == '__main__':
