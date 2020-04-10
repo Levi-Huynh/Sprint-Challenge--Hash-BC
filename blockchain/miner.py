@@ -30,10 +30,10 @@ def proof_of_work(last_proof):
     prev_guess = f'{last_proof}'.encode()
     last_hash = hashlib.sha256(prev_guess).hexdigest() 
 
-    proof = randint(1,1000000) + randint(1,100)
+    proof = last_proof+ int(randint(1,1000000)) 
 
     while valid_proof(last_hash, proof) is False:
-        proof+=randint(1,100)
+        proof+=1
         #print("proof not yet found", proof)
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof

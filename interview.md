@@ -6,7 +6,7 @@ Objectives:
 3) Know the diff between arrays & Python lists  
 
 1) array:
-    Seq of elements of the same type, stored in a contiguous block of memory
+    Seq of elements of the same type, sequential, stored in a contiguous block of memory
 
 How to declare array?
 1) determine how big the array needs to be 
@@ -24,6 +24,60 @@ Declare the array: [2,3,4,5]
 3. Recieve the memory address of the reserved block 
     -`recieve an address to the start of the 16-bytes of reserved memory`
 4. Write your values into the array 
+
+ #  (indexOfbucket) * (bucket/value) + startMemAddress(5000) = 5012 
+
+ Python dicts have extra helper methods 
+
+object/
+hash map/
+dict
+
+made up of:
+
+{ array: [], HashFunction: f()}  //dynamically sized arr, //several flavors of f()}
+
+how are arrays stored in memory:
+
+5000 5004 5008 5012  5016 
+
+1     2    3   4      5
+
+RAM/memory, store in memory cells (5000, 5004) 
+# Creating new Array
+1) program asks computer for memory (not allowed to write to mem directly)
+2) mem. the OS gives you is all next to each other (for arrays, contiguous, sequential.)
+    #if want 4th bucket, get index of that bucket, bucket size 4, index 3, 
+        # 3 (indexOfbucket) * 4 (bucket/value) + startMemAddress(5000) = 5012 __memory-address__ 
+        or memory_address + numberOfBits 
+        #also depends on how many bytes/what is being stored in each memory ram cell, if its 1:1 for the value & cell
+        #8 bits is a byte 
+        #half a byte is a nibble 
+3) gives you a completely new memory address, with sometimes double space you requested #the extra space given will double by lang 
+#question first time your request /create array are you given the _exact_ amount of mem cells. Only given extra memory cells after the first request? 
+4) copy each element over one at a time (resizing) => O(n)
+
+# Inserting to array
+1) if array already exists, but memory cells not all filled
+2) want to insert in between 2 values/buckets
+3) pick up all the elments to right of where you want to insert, & move it over 1 (as long as their memory cells available at ends to the right) #do this by copying each element, set it to right & overwrite whats there 
+4) inserting into middle array: RT: O(n), have to move each array to the right, over one 
+#remember this hopscotch, move each over 1 to right of ops, wil help
+
+# Dyanmic Array: resizes when needs to
+see dynamicArraypt4.py
+
+# We need _deterministic_ hash functions: 
+    need HF f() thats deterministic, if given smame string, / key, always get the same back the same index 
+
+# review
+
+# searching array O(n)
+# accessing array O(c)
+# creating/ storing key value pair O(c)
+# reading from hash table O(c)
+    -b/c don't have to traverse, just plug key 
+    into hash, get index, access array w/ index givne from hash function is O(c)
 
 Advantages:
 -Space and time efficient
@@ -44,7 +98,7 @@ Advantages:
 # HOW DOES PYTHON ADD AN ELEMENT TO THE begining OF A LIST?
 1. Check if theres any empty space at the end of the array 
 2.  If not: 
-    1) allocate a new array, pace the first lement and copy over the test
+    1) allocate a new array, place the first lement and copy over the test
     2) Free memory from the old array 
 3 If so: 
     1) starting at back, move Each element to the right one space 
@@ -52,6 +106,10 @@ Advantages:
     O(n) operation no matter what for insert into front!!! 
 
     Explain in detail the workings of a dynamic array:
+    hashfunction of key to find where to store in bucket, 
+    adds key value to that index in stroage,
+    , if new key has same index, 
+    add llp at next node
 What is the runtime complexity to access an array, add or remove from the front, and add or remove from the back?
 `ARRAY RTC`:
 -`ACCESS`- O(1)
@@ -113,9 +171,9 @@ block entry (via proof of work)
 # PROOF OF WORK
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
 -proof of work is an arbitrarily(6-70 leading zeros) difficult problem, that takes a large amount of computation to return/solve/satisfy
--by `requiring a solution that uses the hash of the previous block, plus a new value, work can't start ahead of time (must have the prev block forged correctly) & can't be reused`
+-by `requiring a solution that uses the hash of the previous block, plus a new (random, guess/ created from algo value), that must pass the arbitrarly difficulty requirements such as that which has 6 leading zeros. work can't start ahead of time (must have the prev block forged correctly) & can't be reused` 
 -`The difficult can be tuned to allow a consistent discovery of proofs, regardless of the total effort spent`
--This protects the blockchains by making it very difficult to generate a new block  
+-This protects the blockchains by making it very difficult to generate a new block  , you've put in the work to find a proof that passes the diffuclty level normally determined by rate of blocks forged, using the correct previous block hash, 
  # `#guess is 
         #just an encoding of the prev block's hash & some algo/random number
         #that must pass specified difficulty such as having certain number of leading zeros`
