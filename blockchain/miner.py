@@ -7,8 +7,11 @@ from uuid import uuid4
 
 from timeit import default_timer as timer
 
-from random import randint
+import random
+from decimal import *
 import json
+
+ 
 
 def proof_of_work(last_proof):
     """
@@ -30,11 +33,11 @@ def proof_of_work(last_proof):
     prev_guess = f'{last_proof}'.encode()
     last_hash = hashlib.sha256(prev_guess).hexdigest() 
 
-    proof = last_proof+ int(randint(1,1000000)) 
+    proof =random.random()
 
     while valid_proof(last_hash, proof) is False:
         proof+=1
-        #print("proof not yet found", proof)
+        print("proof not yet found", proof)
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
